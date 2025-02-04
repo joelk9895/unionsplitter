@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
   Upload,
-  FileText,
   AlertCircle,
   CheckCircle,
   Loader2,
@@ -21,7 +20,7 @@ import {
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const MegaMenu = () => {
-  const [activeMenu, setActiveMenu] = useState(null);
+  const [activeMenu, setActiveMenu] = useState<string | null>(null);
 
   return (
     <nav className="fixed w-full backdrop-blur-xl bg-black/30 border-b border-white/10 z-50">
@@ -257,14 +256,14 @@ const Footer = () => (
 );
 
 const GroupAssignmentApp = () => {
-  const [excelFile, setExcelFile] = useState(null);
-  const [numGroups, setNumGroups] = useState(2);
+  const [excelFile, setExcelFile] = useState<File | null>(null);
+  const [numGroups] = useState(2);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
 
-  const handleExcelUpload = (e) => {
-    const file = e.target.files[0];
+  const handleExcelUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (file && file.name.endsWith(".xlsx")) {
       setExcelFile(file);
       setError("");
@@ -273,7 +272,7 @@ const GroupAssignmentApp = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!excelFile) {
       setError("Please upload an Excel file");
@@ -316,7 +315,7 @@ const GroupAssignmentApp = () => {
       setSuccess(true);
       setExcelFile(null);
     } catch (err) {
-      setError(err.message);
+      setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
       setLoading(false);
     }
