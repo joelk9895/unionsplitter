@@ -293,10 +293,13 @@ const GroupAssignmentApp = () => {
     formData.append("num_groups", numGroups.toString());
 
     try {
-      const response = await fetch("http://127.0.0.1:8080/assign-groups", {
-        method: "POST",
-        body: formData,
-      });
+      const response = await fetch(
+        "https://5lkk2g07-8080.inc1.devtunnels.ms/assign-groups",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to process files");
@@ -315,7 +318,7 @@ const GroupAssignmentApp = () => {
       setSuccess(true);
       setExcelFile(null);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
       setLoading(false);
     }
