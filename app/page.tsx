@@ -293,7 +293,7 @@ const GroupAssignmentApp = () => {
     formData.append("num_groups", numGroups.toString());
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/assign-groups", {
+      const response = await fetch("http://127.0.0.1:8080/assign-groups", {
         method: "POST",
         body: formData,
       });
